@@ -1,0 +1,147 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+div#header{
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 148px;
+    background-size: auto;
+}
+div#footer{
+    color: black;
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width:100%;
+    height: 50px;
+    background-image: url('images/1.jpg');
+    background-color: #000000;
+
+}
+div#sidebar{
+    position: fixed;
+    left: 0;
+    top: 150px;
+    width: 250px;
+    height: 457px;
+    color: black;
+    margin-left: 15px;
+    //background-color: #000000;
+    background-image: url('images/1.jpg');
+}
+.sticky{
+    background-color: #ffc;
+    text-align: left;
+    overflow: auto;
+    background:#ffc;
+    display:block;
+    height:11em;
+    width:14em;
+    padding-left:1em;
+    -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+    -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    font-family: Reenie Beanie;
+
+}
+.menucontainer{
+    display: inline;
+    width: 1095px;
+    float: right;// next time you want to float this right or increase the width, remember the scroll bar!!!
+    /*border-radius: 15px;*/
+    height: 150px;
+    background-color: #000000;
+    background-image: url('images/1.jpg');
+}
+.menubar{
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+    border-radius: 15px;
+    width: 700px;
+    height: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    background-image: url('images/4.png');
+    background-color: #ccff99;
+}
+.menu{
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: white;
+    width: 160px;
+    height: 24px;
+    float: left;
+    color: white;
+    text-align: center;
+    margin-right: 5px;
+    margin-left: 5px;
+    background-color: black;
+}
+.logo{
+    display: inline;
+    width: 250px;
+    float: left;
+    height: 145px;
+    color: #ffcc33;
+    background-color: #000000;
+    background-image: url('images/2.jpg');
+}
+.logo p{
+    left: 60px;
+    font-size: 50px;
+    margin-top: 12px;
+    margin-left: 60px;
+    font-family: Brush Script MT;
+    //text-shadow: 2px 2px 4px #ff0000;
+}
+.logout{
+    float: right;
+    border-style: solid;
+    margin-right: 50px;
+    margin-top: 20px;
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+    border-width: 2px;
+    font-size: 14px;
+    font-family: Arial;
+    height: 12px;
+    background-image: url('images/4.png');
+}
+.logotext{
+    font-size: 50px;
+    text-align: center;
+    color: #ffcc33;
+    font-family: Times New Roman;
+    //text-shadow: 2px 2px 4px #ffcc33;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+a:visited{
+    color: white;
+    text-decoration:none;
+}
+a:link{
+    text-decoration: none;
+}
+.logout a{
+    color: white;
+}.logout a:hover{
+    color: red;
+}
+#pic{
+    border-radius: 40%;
+    overflow: hidden;
+    //display: inline-block;
+    float: left;
+    width: 140px;
+    height: 140px;
+    opacity:  0.1;
+}

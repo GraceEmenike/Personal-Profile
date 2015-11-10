@@ -1,0 +1,80 @@
+body{
+    background-color: #cccccc;
+    margin-bottom: 0px;
+    padding: 0px;
+}
+div.container{
+    margin-top: 170px;
+    overflow: auto;
+    margin-bottom: 60px;
+    margin-left: 250px;
+    height: 1000px;
+    padding: 0px;
+    width: 1000px;
+    background-color: #cccccc;
+}
+div .left{
+    float: left;
+    width: 40%;
+    /*height: 100%;this line should be inspected*/
+    padding: 0px;
+}
+div .right{
+    float: right;
+    width: 30%;
+}
+div .both{
+    background-color: #cccccc;
+    clear: right;
+    float: right;
+    width: 68%; // The remaining 2px is for the border
+}
+ul{
+    width: 100%;
+}
+li{
+    padding-left: 0px;
+    padding-bottom: 0em;
+    padding-top: 0em;
+    float:left;
+    width: 50%;
+    list-style-position: outside;
+}
+.out{
+    float: left;
+    width: 20%;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+}
+p.company{
+    color: #000000;
+    font-size: 18px;
+    padding: 0px;
+    margin-bottom: 0px;
+}
+p.title{
+    color: #666666;
+    font-size: 16px;
+    padding: 0px;
+    margin-top: -4px;
+    margin-bottom: 0px;
+}
+p.description{
+    color: #666666;
+    font-size: 16px;
+    padding: 0px;
+    margin-top: -4px;
+
+}
+div p.topic{
+    color: #000000;
+
+}
+.edits{
+    background-color: #cccccc;
+    clear: right;
+    float: right;
+    width: 78%; // The remaining 2px is for the border
+    // display:
+}

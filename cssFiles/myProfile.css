@@ -1,0 +1,54 @@
+p{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    overflow: auto;
+    padding: 0px;
+    float: left;
+}
+.inner{
+    width: 95%;
+}
+.left{
+    margin-left: 50px;
+    float: left;
+    color: #ffffff;
+    width: 80%;
+}
+.left span{
+    font-size: 20px;
+}
+#b{
+    color: #000000;
+    font-size: 32px;
+    font-family: Arial;
+    font-style: normal;
+    margin-left: 20px;
+}
+#c1{
+    font-style: italic;
+    font-size: 20px;
+}
+#c2{
+    font-style: normal;
+}
+.d{
+    font-size: 20px;
+}
+#e{
+    font-style: italic;
+    color: #000000;
+}
+#h{
+    width: 200px;
+    height: 200px;
+}
+form{
+    padding: 0;
+    font-size: 20px;
+    color: #000000;
+}
+form input, select, button, text, textarea{
+    font-size: 14px;
+}

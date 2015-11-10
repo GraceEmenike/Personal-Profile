@@ -1,16 +1,19 @@
 <?php
+include 'HeaderFooter.php';
 $con = mysqli_connect("localhost", "root", "", "vickprofile");
 if (!$con) {
     die('Could not Connect:' . mysqli_error($con));
 }
 ?>
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>Edit Curriculum</title>
+        <link rel="stylesheet" type="text/css" href="cssFiles/design.css" />
+        <script type="text/javascript" src="jsFiles/index.js" ></script>
     </head>
-    <body>
+    <body style="background-color: aliceblue">
 
         <?php
         // This part reads the add Skill post
@@ -44,8 +47,6 @@ if (!$con) {
             if (!$result) {
                 echo 'Oops! Something went wrong with update. Please try again for SubmitExpe..';
             }
-        } else {
-            echo 'Please complete the edit experience fields';
         }
 
         // This next part reads the add Education post
@@ -59,8 +60,6 @@ if (!$con) {
             if (!$result) {
                 echo 'Oops! Something went wrong with update. Please try again for SubmitEducat..';
             }
-        } else {
-            echo 'Please complete the edit education fields';
         }
 
         // This next part reads the add Certification post
@@ -73,8 +72,6 @@ if (!$con) {
             if (!$result) {
                 echo 'Oops! Something went wrong with update. Please try again for SubmitCert..';
             }
-        } else {
-            echo 'Please complete the edit certification fields';
         }
 
         // This part reads the add Language post
@@ -146,10 +143,12 @@ if (!$con) {
                 mysqli_query($con, $selected_details);
             }
         }
+        //hideEdit();
         ?>
-        <!--Start of Summary Section-->
-        <div style="background-color: #E8E8E8; width: content-box;">
-            <p ><strong style="color: blue"><em>Summary</em></strong><br />
+        <div  onmousemove="hideEdit()" class="container">
+            <!--Start of Summary Section-->
+            <div style="width: 100%; clear: both" >
+                <div class="out"><p class="title"><em><strong>Summary</strong></em><br /></p></div>
                 <?php
                 $selected_details = "SELECT * FROM summary";
                 $result = mysqli_query($con, $selected_details);
@@ -157,22 +156,30 @@ if (!$con) {
                 if (!$result) {
                     echo mysqli_error($con);
                 }
-                $i = 0;
-                while ($row = mysqli_fetch_array($result)) {
-                    $dDescription[$i] = $row['Description'];
-                    $dDescriptionId[$i] = $row['ID']; // i needed this for the SQL to remove skill form
-                    echo $dDescription[$i];
-                    ?>
-                    <?php
-                    $i++;
-                }
                 ?>
-            </p>
 
-            <form action="EditCurriculum.php" method="post">
-                <input type="submit" value="Add Skill" name="AddSummary" />
-                <input type="Submit" value="Remove" name="RemoveSummary" />
-            </form>
+                <div class="both">
+                    <?php
+                    $i = 0;
+                    while ($row = mysqli_fetch_array($result)) {
+                        $dDescription[$i] = $row['Description'];
+                        $dDescriptionId[$i] = $row['ID']; // i needed this for the SQL to remove skill form
+                        ?>
+
+                        <?php
+                        echo "<p class='title'>" . $dDescription[$i] . "</p>";
+                        $i++;
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="edits">
+                <form action="EditCurriculum.php" method="post">
+                    <input type="submit" value="Add Skill" name="AddSummary" />
+                    <input type="Submit" value="Remove" name="RemoveSummary" />
+                </form>
+            </div>
+            <br/>
             <?php
             if (filter_input(INPUT_POST, "AddSummary")) {
                 $AddSummary = filter_input(INPUT_POST, "AddSummary");
@@ -199,12 +206,12 @@ if (!$con) {
                 <?php
             }
             ?>
-        </div>
-        <!--End of Skill Section-->
 
-        <!--Start of Skill Section-->
-        <div style="background-color: #E8E8E8; width: content-box;">
-            <p ><strong style="color: blue"><em>Skills</em></strong><br />
+            <!--End of Summary Section-->
+
+            <!--Start of Skill Section-->
+            <div style="width: 100%; clear: both">
+                <div class="out"><p class="title"><em><strong>Skills</strong></em></p></div>
                 <?php
                 $selected_details = "SELECT * FROM skills";
                 $result = mysqli_query($con, $selected_details);
@@ -213,318 +220,354 @@ if (!$con) {
                     echo mysqli_error($con);
                 }
                 $i = 0;
-                while ($row = mysqli_fetch_array($result)) {
-                    $dSkill[$i] = $row['Skill'];
-                    $dSkillId[$i] = $row['ID']; // i needed this for the SQL to remove skill form
-                    echo $dSkill[$i] . ", ";
-                    ?>
+                ?>
+                <div class="both">
                     <?php
+                    while ($row = mysqli_fetch_array($result)) {
+                        $dSkill[$i] = $row['Skill'];
+                        $dSkillId[$i] = $row['ID']; // i needed this for the SQL to remove skill form
+                        //echo $dSkill[$i] . ", ";//This aint needed anymore
+                        ?>
+                        <ul>
+                            <li><?= $dSkill[$i] ?></li>
+                        </ul>
+                        <?php
+                        $i++;
+                    }
+                    ?>
+                </div>
+                <div class="edits">
+                    <form action="EditCurriculum.php" method="post">
+                        <input type="submit" value="Add Skill" name="AddSkill" />
+                        <input type="Submit" value="Remove" name="RemoveSkill" />
+                    </form>
+                    <br/>
+                </div>
+                <div class="both">
+                    <?php
+                    if (filter_input(INPUT_POST, "AddSkill")) {
+                        $AddSkill = filter_input(INPUT_POST, "AddSkill");
+                        ?>
+                        <form action="EditCurriculum.php" method="post">
+                            <input type="text" name="Skillo" />
+                            <input type="Submit" value="Add" />
+                        </form>
+                    </div>
+                    <div class="both">
+                        <?php
+                    }
+                    if (filter_input(INPUT_POST, "RemoveSkill")) {
+                        $RemoveSkill = filter_input(INPUT_POST, "RemoveSkill");
+                        ?>
+                        <form action="EditCurriculum.php" method="post">
+                            <?php
+                            for ($k = 0; $k <= $i - 1; $k++) {
+                                ?>
+                                <input type="checkbox" name="Skill[]" value="<?= $dSkillId[$k] ?>" /> <?= $dSkill[$k] ?><br />
+                                <?php
+                            }
+                            ?>
+                            <input type="Submit" value="Remove Choices" />
+                        </form>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+            <!--End of Skill Section-->
+            <!--Start of Experience Section-->
+            <div style="clear: both">
+                <div class="out"><p class="topic"><em><strong>Experience</strong></em></p></div>
+                <?php
+                $selected_details = "SELECT * FROM experiences";
+                $result = mysqli_query($con, $selected_details);
+
+                if (!$result) {
+                    echo mysqli_error($con);
+                }
+                ?>
+
+                <?php
+                $i = 0;
+                while ($row = mysqli_fetch_array($result)) {
+                    $dExperienceId[$i] = $row['ID']; // try working on the id of the database
+                    $dCompany[$i] = $row['Company'];
+                    $dTitle[$i] = $row['Title'];
+                    $dDescription[$i] = $row['Description'];
+                    $dStart[$i] = $row['Start'];
+                    $dFinish[$i] = $row['Finish'];
                     $i++;
                 }
                 ?>
-            </p>
 
-            <form action="EditCurriculum.php" method="post">
-                <input type="submit" value="Add Skill" name="AddSkill" />
-                <input type="Submit" value="Remove" name="RemoveSkill" />
-            </form>
-            <?php
-            if (filter_input(INPUT_POST, "AddSkill")) {
-                $AddSkill = filter_input(INPUT_POST, "AddSkill");
-                ?>
-                <form action="EditCurriculum.php" method="post">
-                    <input type="text" name="Skillo" />
-                    <input type="Submit" value="Add" />
-                </form>
                 <?php
-            }
-            if (filter_input(INPUT_POST, "RemoveSkill")) {
-                $RemoveSkill = filter_input(INPUT_POST, "RemoveSkill");
-                ?>
-                <form action="EditCurriculum.php" method="post">
-                    <?php
-                    for ($k = 0; $k <= $i - 1; $k++) {
-                        ?>
-                        <input type="checkbox" name="Skill[]" value="<?= $dSkillId[$k] ?>" /> <?= $dSkill[$k] ?><br />
-                        <?php
-                    }
+                for ($s = 0; $s < $i; $s++) {
                     ?>
-                    <input type="Submit" value="Remove Choices" />
-                </form>
-                <?php
-            }
-            ?>
-        </div>
-        <!--End of Skill Section-->
-        <!--Start of Experience Section-->
-        <br/>
-        <div style=" float: left; background-color: #E8E8E8; width: 100%;">
-            <strong style="color: blue"><em>Experience</em></strong><br />
-            <?php
-            $selected_details = "SELECT * FROM experiences";
-            $result = mysqli_query($con, $selected_details);
+                    <div class="both">
+                        <div class="left">
+                            <?php
+                            echo "<p class='company'><strong>" . $dCompany[$s] . "</strong></p>";
+                            echo "<p class='title'>" . $dTitle[$s] . "</p>";
+                            echo "<p class = 'title'>" . $dDescription[$s] . "</p>";
+                            ?>
+                        </div>
 
-            if (!$result) {
-                echo mysqli_error($con);
-            }
-            ?>
-
-            <?php
-            $i = 0;
-            while ($row = mysqli_fetch_array($result)) {
-                $dExperienceId[$i] = $row['ID']; // try working on the id of the database
-                $dCompany[$i] = $row['Company'];
-                $dTitle[$i] = $row['Title'];
-                $dDescription[$i] = $row['Description'];
-                $dStart[$i] = $row['Start'];
-                $dFinish[$i] = $row['Finish'];
-                $i++;
-            }
-            ?>
-
-            <div style="background-color: #E8E8E8; width: content-box; float: left; width: 70%">
-                <?php
-                for ($s = 0; $s < $i; $s++) {
-                    echo $dCompany[$s] . "<br/>";
-                    echo $dTitle[$s] . "<br/>";
-                    echo $dDescription[$s] . "<br/>";
+                        <div class="right">
+                            <?php
+                            echo "<p class='company'><strong>" . $dStart[$s] . "  -  " . $dFinish[$s] . "</strong>"
+                            . "<span>  <img id ='testimage'  onmouseover='opaque(2)' style='width: 15px; height: 15px' src='images/edit.ico' onclick='displayEdit(2)' /></span></p>";
+                            ?>
+                        </div>
+                    </div>
+                    <?php
                 }
                 ?>
-            </div>
-            <div style="background-color: #E8E8E8; width: 30%; float: right" >
-                <?php
-                for ($s = 0; $s < $i; $s++) {
-                    echo $dStart[$s] . "  -  " . $dFinish[$s] . "<br />";
-                }
-                ?>
-
-            </div>
-            <p><br/></p>
-            <form action="EditCurriculum.php" method="post">
-                <p><input type="submit" value="Add Experience" name="AddExperience" />
-                    <input type="Submit" value="Remove" name="RemoveExperience" /></p>
-            </form>
-            <?php
-            if (filter_input(INPUT_POST, "AddExperience")) {
+                <div class="edits">
+                    <form action="EditCurriculum.php" method="post">
+                        <input type="submit" value="Add Experience" name="AddExperience" />
+                        <input type="Submit" value="Remove" name="RemoveExperience" /><br/>
+                    </form>
+                    <br/>
+                </div>
+                <div class="both">
+                    <?php
+                    if (filter_input(INPUT_POST, "AddExperience")) {
 //                $AddExperience = filter_input(INPUT_POST, "AddExperience");
-                ?>
-                <form action="EditCurriculum.php" method="post">
-                    <table>
-                        <tr>
-                            <td><p>Company:</td> <td><input type="text" name="Company" /></p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Title:</td> <td><input type="text" name="Title" /></p></td>
-                        </tr>
-                        <!--                       Change the input type to a text area-->
-                        <tr>
-                            <td><p>Description:</td> <td><input type="text" name="Description" /></p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Duration(Start):</td> <td> <input type="text" name="Start" /></p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Duration(Stop):</td> <td><input type="text" name="Finish" /></p></td>
-                        </tr>
-                        <tr><td><input type="Submit" value="Add" /></td></tr>
-                    </table>
-                </form>
-                <?php
-            }
-            if (filter_input(INPUT_POST, "RemoveExperience")) {
-                $RemoveExperience = filter_input(INPUT_POST, "RemoveExperience");
-                ?>
-                <form action="EditCurriculum.php" method="post" enctype="multipart/form-data">
-                    <?php
-                    for ($k = 0; $k <= $i - 1; $k++) {
                         ?>
-                        <input type="checkbox" name="Experience[]" value="<?= $dExperienceId[$k] ?>" /> <?= $dTitle[$k] ?><br />
+                        <form action="EditCurriculum.php" method="post">
+                            <table>
+                                <tr>
+                                    <td><p>Company:</td> <td><input type="text" name="Company" /></p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Title:</td> <td><input type="text" name="Title" /></p></td>
+                                </tr>
+                                <!--                       Change the input type to a text area-->
+                                <tr>
+                                    <td><p>Description:</td> <td><input type="text" name="Description" /></p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Duration(Start):</td> <td> <input type="text" name="Start" /></p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Duration(Stop):</td> <td><input type="text" name="Finish" /></p></td>
+                                </tr>
+                                <tr><td><input type="Submit" value="Add" /></td></tr><br/>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="both">
                         <?php
                     }
-                    ?>
-                    <input type="Submit" value="Remove Choices" />
-                </form>
-                <?php
-            }
-            ?>
+                    if (filter_input(INPUT_POST, "RemoveExperience")) {
+                        $RemoveExperience = filter_input(INPUT_POST, "RemoveExperience");
+                        ?>
+                        <form action="EditCurriculum.php" method="post" enctype="multipart/form-data">
+                            <?php
+                            for ($k = 0; $k <= $i - 1; $k++) {
+                                ?>
+                                <input type="checkbox" name="Experience[]" value="<?= $dExperienceId[$k] ?>" /> <?= $dTitle[$k] ?><br />
+                                <?php
+                            }
+                            ?>
+                            <input type="Submit" value="Remove Choices" />
+                        </form>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+            <!--End of Experience Section-->
+
+            <!--Start of Education Section-->
             <br/>
-        </div>
-        <!--End of Experience Section-->
-
-        <!--Start of Education Section-->
-        <p><br/></p>
-        <div style="  background-color: #E8E8E8; width: content-box;">
-            <strong style="color: blue"><em>Education</em></strong><br />
-            <?php
-            $selected_details = "SELECT * FROM education";
-            $result = mysqli_query($con, $selected_details);
-
-            if (!$result) {
-                echo mysqli_error($con);
-            }
-            ?>
-            <?php
-            $i = 0;
-            while ($row = mysqli_fetch_array($result)) {
-                $dEducationId[$i] = $row['ID']; // try working on the id of the database
-                $dInstitution[$i] = $row['Institution'];
-                $dDegree[$i] = $row['Degree'];
-                $dStart[$i] = $row['Start'];
-                $dFinish[$i] = $row['Finish'];
-                $i++;
-            }
-            ?>
-
-            <div style="background-color: #E8E8E8; width: content-box; float: left; width: 70%">
+            <div style="clear: both">
+                <div class="out"><p class="topic"><em><strong>Education</strong></em></p><br /></div>
                 <?php
-                for ($s = 0; $s < $i; $s++) {
-                    echo $dInstitution[$s] . "<br/>";
-                    echo $dDegree[$s] . "<br/>";
+                $selected_details = "SELECT * FROM education";
+                $result = mysqli_query($con, $selected_details);
+
+                if (!$result) {
+                    echo mysqli_error($con);
                 }
                 ?>
-            </div>
-            <div style="background-color: #E8E8E8; width: 30%; float: right" >
                 <?php
-                for ($s = 0; $s < $i; $s++) {
-                    echo $dStart[$s] . "  -  " . $dFinish[$s] . "<br />";
+                $i = 0;
+                while ($row = mysqli_fetch_array($result)) {
+                    $dEducationId[$i] = $row['ID']; // try working on the id of the database
+                    $dInstitution[$i] = $row['Institution'];
+                    $dDegree[$i] = $row['Degree'];
+                    $dStart[$i] = $row['Start'];
+                    $dFinish[$i] = $row['Finish'];
+                    $i++;
                 }
-                ?>
 
-            </div>
-            <p><br/></p>
-            <form action="EditCurriculum.php" method="post">
-                <input type="submit" value="Add Education" name="AddEducation" />
-                <input type="Submit" value="Remove" name="RemoveEducation" />
-            </form>
-            <?php
-            if (filter_input(INPUT_POST, "AddEducation")) {
-//                $AddExperience = filter_input(INPUT_POST, "AddEducation");
-                ?>
-                <form action="EditCurriculum.php" method="post">
-                    <table>
-                        <tr>
-                            <td><p>Institution:</td> <td><input type="text" name="Institution" /></p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Degree:</td> <td><input type="text" name="Degree" /></p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Duration(Start):</td> <td> <input type="text" name="Start" /></p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Duration(Stop):</td> <td><input type="text" name="Finish" /></p></td>
-                        </tr>
-                        <tr><td><input type="Submit" value="Add" /></td></tr>
-                    </table>
-                </form>
-                <?php
-            }
-            if (filter_input(INPUT_POST, "RemoveEducation")) {
-                $RemoveEducation = filter_input(INPUT_POST, "RemoveEducation");
-                ?>
-                <form action="EditCurriculum.php" method="post" enctype="multipart/form-data">
+                for ($s = 0; $s < $i; $s++) {
+                    ?>
+                    <div class="both">
+                        <div class="left" >
+                            <?php
+                            echo "<p class='company'><strong>" . $dInstitution[$s] . "</strong></p>";
+                            echo "<p class='title'>" . $dDegree[$s] . "</p>";
+                            ?>
+                        </div>
+                        <div class="right" >
+                            <?php
+                            echo "<p class='company'><strong>" . $dStart[$s] . "  -  " . $dFinish[$s] . "</strong>"
+                            . "<span>  <img style='width: 15px; height: 15px' src='images/edit.ico' onclick='displayEdit(2)' /></span></p>";
+                            ?>
+                        </div>
+                    </div>
                     <?php
-                    for ($k = 0; $k <= $i - 1; $k++) {
+                }
+                ?>
+                <br/>
+                <div class="edits">
+                    <form action="EditCurriculum.php" method="post">
+                        <input type="submit" value="Add Education" name="AddEducation" />
+                        <input type="Submit" value="Remove" name="RemoveEducation" /><br/>
+                    </form>
+                    <br/>
+                </div>
+                <div class="both">
+                    <?php
+                    if (filter_input(INPUT_POST, "AddEducation")) {
                         ?>
-                        <input type="checkbox" name="Education[]" value="<?= $dDegree[$k] ?>" /> <?= $dDegree[$k] ?><br />
+                        <form action="EditCurriculum.php" method="post">
+                            <table>
+                                <tr>
+                                    <td><p>Institution:</td> <td><input type="text" name="Institution" /></p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Degree:</td> <td><input type="text" name="Degree" /></p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Duration(Start):</td> <td> <input type="text" name="Start" /></p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Duration(Stop):</td> <td><input type="text" name="Finish" /></p></td>
+                                </tr>
+                                <tr><td><input type="Submit" value="Add" /></td></tr><br/>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="both">
                         <?php
                     }
-                    ?>
-                    <input type="Submit" value="Remove Choices" />
-                </form>
-                <?php
-            }
-            ?>
-        </div>
-        <!--End of Education Section-->
-
-        <!--Start of Certification Section-->
-        <br/>
-        <div style="  background-color: #E8E8E8; width: content-box;">
-            <strong style="color: blue"><em>Certification</em></strong><br />
-            <?php
-            $selected_details = "SELECT * FROM Certification";
-            $result = mysqli_query($con, $selected_details);
-
-            if (!$result) {
-                echo mysqli_error($con);
-            }
-            ?>
-
-            <?php
-            $i = 0;
-            while ($row = mysqli_fetch_array($result)) {
-                $dCertificateId[$i] = $row['ID']; // try working on the id of the database
-                $dCertificate[$i] = $row['Certificate'];
-                $dSummary[$i] = $row['Summary'];
-                $dDate[$i] = $row['Date'];
-                $i++;
-            }
-            ?>
-
-            <div style="background-color: #E8E8E8; width: content-box; float: left; width: 70%">
-                <?php
-                for ($s = 0; $s < $i; $s++) {
-                    echo $dCertificate[$s] . "<br/>";
-                    echo $dSummary[$s] . "<br/>";
-                }
-                ?>
-            </div>
-            <div style="background-color: #E8E8E8; width: 30%; float: right" >
-                <?php
-                for ($s = 0; $s < $i; $s++) {
-                    echo $dDate[$s] . "<br />";
-                }
-                ?>
-
-            </div>
-            <p><br/></p>
-            <form action="EditCurriculum.php" method="post">
-                <input type="submit" value="Add Certification" name="AddCertification" />
-                <input type="Submit" value="Remove" name="RemoveCertification" />
-            </form>
-            <?php
-            if (filter_input(INPUT_POST, "AddCertification")) {
-//                $AddExperience = filter_input(INPUT_POST, "AddEducation");
-                ?>
-                <form action="EditCurriculum.php" method="post">
-                    <table>
-                        <tr>
-                            <td><p>Certificate:</td> <td><input type="text" name="Certificate" /></p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Summary:</td> <td><input type="text" name="Summary" /></p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Date:</td> <td> <input type="text" name="Date" /></p></td>
-                        </tr>
-                        <tr><td><input type="Submit" value="Add" /></td></tr>
-                    </table>
-                </form>
-                <?php
-            }
-            if (filter_input(INPUT_POST, "RemoveCertificate")) {
-                $RemoveCertificate = filter_input(INPUT_POST, "RemoveCertificate");
-                ?>
-                <form action="EditCurriculum.php" method="post">
-                    <?php
-                    for ($k = 0; $k <= $i - 1; $k++) {
+                    if (filter_input(INPUT_POST, "RemoveEducation")) {
+                        $RemoveEducation = filter_input(INPUT_POST, "RemoveEducation");
                         ?>
-                        <input type="checkbox" name="Certificate[]" value="<?= $dCertificate[$k] ?>" /> <?= $dCertificate[$k] ?><br />
+                        <form action="EditCurriculum.php" method="post" enctype="multipart/form-data">
+                            <?php
+                            for ($k = 0; $k <= $i - 1; $k++) {
+                                ?>
+                                <input type="checkbox" name="Education[]" value="<?= $dDegree[$k] ?>" /> <?= $dDegree[$k] ?><br />
+                                <?php
+                            }
+                            ?>
+                            <input type="Submit" value="Remove Choices" />
+                        </form>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+            <!--End of Education Section-->
+
+            <!--Start of Certification Section-->
+            <br/>
+            <div style="clear: both">
+                <div class="out"><p class="topic"><em><strong>Certification</strong></em><br /></p></div>
+                <?php
+                $selected_details = "SELECT * FROM Certification";
+                $result = mysqli_query($con, $selected_details);
+
+                if (!$result) {
+                    echo mysqli_error($con);
+                }
+                ?>
+
+                <?php
+                $i = 0;
+                while ($row = mysqli_fetch_array($result)) {
+                    $dCertificateId[$i] = $row['ID']; // try working on the id of the database
+                    $dCertificate[$i] = $row['Certificate'];
+                    $dSummary[$i] = $row['Summary'];
+                    $dDate[$i] = $row['Date'];
+                    $i++;
+                }
+
+                for ($s = 0; $s < $i; $s++) {
+                    ?>
+                    <div class="both">
+                        <div class="left">
+                            <?php
+                            echo "<p class='company'><strong>" . $dCertificate[$s] . "</strong></p>";
+                            echo "<p class='title'>" . $dSummary[$s] . "</p>";
+                            ?>
+                        </div>
+                        <div class="right" onclick="displayEdit(5)">
+                            <?php
+                            echo "<p class='company'><strong>" . $dDate[$s] . "</strong>"
+                            . "<span onfocus ='displayEdit(5)'>  <img style='width: 15px; height: 15px' src='images/edit.ico'/></span></p>";
+                            ?>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+                <div class="edits">
+                    <form action="EditCurriculum.php" method="post">
+                        <input type="submit" value="Add Certification" name="AddCertification" />
+                        <input type="Submit" value="Remove" name="RemoveCertification" /><br/>
+                    </form>
+                    <br/>
+                </div>
+                <div class="both">
+                    <?php
+                    if (filter_input(INPUT_POST, "AddCertification")) {
+//                $AddExperience = filter_input(INPUT_POST, "AddEducation");
+                        ?>
+                        <form action="EditCurriculum.php" method="post">
+                            <table>
+                                <tr>
+                                    <td><p>Certificate:</td> <td><input type="text" name="Certificate" /></p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Summary:</td> <td><input type="text" name="Summary" /></p></td>
+                                </tr>
+                                <tr>
+                                    <td><p>Date:</td> <td> <input type="text" name="Date" /></p></td>
+                                </tr>
+                                <tr><td><input type="Submit" value="Add" /></td></tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="both">
                         <?php
                     }
-                    ?>
-                    <input type="Submit" value="Remove Choices" />
-                </form>
-                <?php
-            }
-            ?>
-        </div>
-        <!--End of Education Section-->
-
-        <!--Start of Languages Section-->
-        <div style="background-color: #E8E8E8; width: content-box;">
-            <p ><strong style="color: blue"><em>Languages</em></strong><br />
+                    if (filter_input(INPUT_POST, "RemoveCertificate")) {
+                        $RemoveCertificate = filter_input(INPUT_POST, "RemoveCertificate");
+                        ?>
+                        <form action="EditCurriculum.php" method="post">
+                            <?php
+                            for ($k = 0; $k <= $i - 1; $k++) {
+                                ?>
+                                <input type="checkbox" name="Certificate[]" value="<?= $dCertificate[$k] ?>" /> <?= $dCertificate[$k] ?><br />
+                                <?php
+                            }
+                            ?>
+                            <input type="Submit" value="Remove Choices" />
+                        </form>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+            <!--End of Education Section-->
+            <!--Start of Languages Section-->
+            <div style="clear: both">
+                <div class="out"><p class="topic"><em><strong>Languages</strong></em></p></div>
                 <?php
                 $selected_details = "SELECT * FROM Languages";
                 $result = mysqli_query($con, $selected_details);
@@ -533,52 +576,65 @@ if (!$con) {
                     echo mysqli_error($con);
                 }
                 $i = 0;
-                while ($row = mysqli_fetch_array($result)) {
-                    $dLanguage[$i] = $row['Language'];
-                    $dLanguageId[$i] = $row['ID']; // i needed this for the SQL to remove skill form
-                    echo $dLanguage[$i] . ", ";
-                    ?>
+                ?>
+                <div class="both">
                     <?php
-                    $i++;
-                }
-                ?>
-            </p>
-
-            <form action="EditCurriculum.php" method="post">
-                <input type="submit" value="Add Language" name="AddLanguage" />
-                <input type="Submit" value="Remove" name="RemoveLanguage" />
-            </form>
-            <?php
-            if (filter_input(INPUT_POST, "AddLanguage")) {
-                $AddLanguage = filter_input(INPUT_POST, "AddLanguage");
-                ?>
-                <form action="EditCurriculum.php" method="post">
-                    <input type="text" name="Languageo" />
-                    <input type="Submit" value="Add" />
-                </form>
-                <?php
-            }
-            if (filter_input(INPUT_POST, "RemoveLanguage")) {
-                $RemoveLanguage = filter_input(INPUT_POST, "RemoveLanguage");
-                ?>
-                <form action="EditCurriculum.php" method="post">
-                    <?php
-                    for ($k = 0; $k <= $i - 1; $k++) {
+                    while ($row = mysqli_fetch_array($result)) {
+                        $dLanguage[$i] = $row['Language'];
+                        $dLanguageId[$i] = $row['ID']; // i needed this for the SQL to remove skill form
+//
                         ?>
-                        <input type="checkbox" name="Language[]" value="<?= $dLanguageId[$k] ?>" /> <?= $dLanguage[$k] ?><br />
+                        <ul>
+                            <li><?= $dLanguage[$i] ?></li>
+                        </ul>
                         <?php
+                        $i++;
                     }
                     ?>
-                    <input type="Submit" value="Remove Choices" />
-                </form>
-                <?php
-            }
-            mysqli_close($con);
-            ?>
+                </div>
+
+                <div class="edits">
+                    <form action="EditCurriculum.php" method="post">
+                        <input type="submit" value="Add Language" name="AddLanguage" />
+                        <input type="Submit" value="Remove" name="RemoveLanguage" />
+                    </form>
+                    <br/>
+                </div>
+                <div class="both">
+                    <?php
+                    if (filter_input(INPUT_POST, "AddLanguage")) {
+                        $AddLanguage = filter_input(INPUT_POST, "AddLanguage");
+                        ?>
+                        <form action="EditCurriculum.php" method="post">
+                            <input type="text" name="Languageo" />
+                            <input type="Submit" value="Add" />
+                        </form>
+                    </div>
+                    <div class="both">
+                        <?php
+                    }
+                    if (filter_input(INPUT_POST, "RemoveLanguage")) {
+                        $RemoveLanguage = filter_input(INPUT_POST, "RemoveLanguage");
+                        ?>
+                        <form action="EditCurriculum.php" method="post">
+                            <?php
+                            for ($k = 0; $k <= $i - 1; $k++) {
+                                ?>
+                                <input type="checkbox" name="Language[]" value="<?= $dLanguageId[$k] ?>" /> <?= $dLanguage[$k] ?><br />
+                                <?php
+                            }
+                            ?>
+                            <input type="Submit" value="Remove Choices" />
+                        </form>
+                    </div>
+                    <?php
+                }
+                mysqli_close($con);
+                ?>
+            </div>
+            <!--End of Languages Section-->
+
         </div>
-        <!--End of Languages Section-->
-
-
 
     </body>
 </html>

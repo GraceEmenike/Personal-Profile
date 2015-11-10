@@ -1,6 +1,7 @@
 <?php
 $expiretime = time() - 3600;
 setcookie("login", "", $expiretime);
-header("location: index.php")
+setcookie("index", "", $expiretime);
+header("location: index.html")
 ?>
 <!DOCTYPE html>

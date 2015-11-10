@@ -1,0 +1,76 @@
+body{
+    background-color: #000000;
+    //background-image: url('Wallpaper/Bg/1.jpg');
+}
+.container{
+    width: 83%;
+    overflow: auto;
+    padding: 0px;
+    background-color: white;
+    margin-top: 150px;
+    margin-bottom: 50px;
+    margin-left: 252px;
+}
+.inner{
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.left{
+    margin-left: 100px;
+    float: left;
+    color: black;
+    width: 60%;
+}
+.left span{
+    font-size: 20px;
+}
+.right{
+    border-radius: 40%;
+    overflow: hidden;
+    display: inline-block;
+    border-style: dotted;
+}
+.right img{
+    display: block;
+}
+#b{
+    color: black;
+    font-size: 32px;
+    font-family: Arial;
+    font-style: normal;
+
+}
+#c1{
+    font-style: italic;
+    font-size: 20px;
+    color: red;
+}
+#c2{
+    font-style: normal;
+}
+.d{
+    font-size: 20px;
+    color: #660066;
+}
+#e{
+    font-style: italic;
+    color: #ff3399;
+}
+#h{
+    width: 200px;
+    height: 200px;
+}
+
+.menubar{
+    clear: both;
+}
+form{
+    padding: 4px;
+    font-size: 24px;
+    color: #660066;
+}
+form input, select, button, text, textarea{
+    font-size: 16px;
+
+}
